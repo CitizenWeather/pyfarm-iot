@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pyfarm-iot"
+version = "0.1.0"
+description = "Hardware drivers (sensors/actuators) for PyFarm edge devices"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+dependencies = [
+    "pyfarm-core>=0.1.0",
+]
+
+[project.optional-dependencies]
+# Hardware backends, only installable on a Raspberry Pi / edge device.
+hardware = [
+    "RPi.GPIO; platform_machine == 'armv7l' or platform_machine == 'aarch64'",
+    "adafruit-circuitpython-dht; platform_machine == 'armv7l' or platform_machine == 'aarch64'",
+    "adafruit-circuitpython-mcp3xxx; platform_machine == 'armv7l' or platform_machine == 'aarch64'",
+]
+dev = ["pytest>=7"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pyfarm"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
