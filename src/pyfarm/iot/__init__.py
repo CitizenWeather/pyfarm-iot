@@ -18,7 +18,6 @@ from pyfarm.core.actuator import Actuator, Command
 from pyfarm.core.sensor import Sensor
 from pyfarm.iot.registry import (
     build_actuator,
-    build_sensor,
     register_actuator,
     register_sensor,
 )
@@ -30,7 +29,6 @@ __all__ = [
     "Sensor",
     "Actuator",
     "Command",
-    "build_sensor",
     "build_actuator",
     "register_sensor",
     "register_actuator",
