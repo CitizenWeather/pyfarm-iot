@@ -4,11 +4,8 @@ This package implements the sensor/actuator contracts defined in
 :mod:`pyfarm.core.sensor` and :mod:`pyfarm.core.actuator` for real hardware
 (GPIO relays, PWM, DHT22, ADC-backed analog sensors, MQTT devices).
 
-**Status (Phase 0):** scaffolding. The concrete drivers currently live in
-``pyfarm-control`` (``pyfarm.control.sensors`` / ``pyfarm.control.actuators``);
-they will migrate here in a later phase once the core contracts are stable. The
-``Sensor`` and ``Actuator`` base classes are re-exported here so future drivers
-(and downstream code) have a single import location.
+Provides a pluggable driver registry so pyfarm-control can resolve spec
+`kind` names to concrete hardware implementations.
 
 Install the hardware backends with ``pip install 'pyfarm-iot[hardware]'`` on a
 Raspberry Pi; the drivers lazily import their backends, so importing this
@@ -19,5 +16,22 @@ from __future__ import annotations
 
 from pyfarm.core.actuator import Actuator, Command
 from pyfarm.core.sensor import Sensor
+from pyfarm.iot.registry import (
+    build_actuator,
+    build_sensor,
+    register_actuator,
+    register_sensor,
+)
 
-__all__ = ["Sensor", "Actuator", "Command"]
+# Import drivers to trigger registration
+from pyfarm.iot import drivers as _drivers  # noqa: F401
+
+__all__ = [
+    "Sensor",
+    "Actuator",
+    "Command",
+    "build_sensor",
+    "build_actuator",
+    "register_sensor",
+    "register_actuator",
+]
